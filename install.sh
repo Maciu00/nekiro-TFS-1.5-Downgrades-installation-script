@@ -321,7 +321,7 @@ echo -e ""
 
 echo -e "${YELLOW}=== TFS Server Commands ======================${NC}"
 echo "  Manual start:"
-echo "      cd /root/forgottenserver-install-linux && ./tfs"
+echo "      cd TFS-1.5-Downgrades  && ./tfs"
 echo ""
 echo "  Systemd:"
 echo "      systemctl start tfs"
