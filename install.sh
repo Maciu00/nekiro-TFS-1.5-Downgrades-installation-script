@@ -47,6 +47,8 @@ libcrypto++-dev libcrypto++-doc libcrypto++-utils
 
 apt autoremove -y
 
+mkdir forgottenserver-install-linux
+
 # ------------------------------
 #   DOWNLOAD INSTALLER
 # ------------------------------
