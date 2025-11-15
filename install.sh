@@ -232,7 +232,7 @@ chmod +x ../tfs
 # ------------------------------
 
 ACCOUNT_NAME="111111"
-ACCOUNT_PASS="password123"
+ACCOUNT_PASS=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c16)
 PLAYER_NAME="PlayerTest"
 
 echo -e "[INFO] Creating account and player..."
