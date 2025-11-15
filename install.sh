@@ -47,7 +47,6 @@ libcrypto++-dev libcrypto++-doc libcrypto++-utils
 
 apt autoremove -y
 
-mkdir forgottenserver-install-linux
 
 # ------------------------------
 #   DOWNLOAD INSTALLER
@@ -104,15 +103,15 @@ else
 fi
 # --- CLONE OR UPDATE REPOSITORY ---
 cd /root || exit
-if [ -d "forgottenserver-install-linux" ]; then
-    cd forgottenserver-install-linux || exit
+if [ -d "TFS-1.5-Downgrades" ]; then
+    cd TFS-1.5-Downgrades || exit
     git fetch
     git reset --hard
     git checkout "$BRANCH"
     git pull origin "$BRANCH"
 else
     git clone -b "$BRANCH" "$REPO_URL"
-    cd forgottenserver-install-linux || exit
+    cd TFS-1.5-Downgrades|| exit
 fi
 # ------------------------------
 #   RANDOM DB ACCESS
@@ -154,7 +153,7 @@ MYSQL_SCRIPT
 echo -e "[INFO] Importing MySQL schema..."
 
 if [ -f mysql/schema.sql ]; then
-    mysql -u "${DB_USER}" -p"${DB_PASS}" -h 127.0.0.1 "${DB_SQL}" < mysql/schema.sql
+    mysql -u "${DB_USER}" -p"${DB_PASS}" -h 127.0.0.1 "${DB_SQL}" < ./schema.sql
 else
     echo -e "[WARN] mysql/schema.sql not found. Skipping import."
 fi
