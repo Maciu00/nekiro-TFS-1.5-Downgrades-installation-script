@@ -152,7 +152,7 @@ MYSQL_SCRIPT
 
 echo -e "[INFO] Importing MySQL schema..."
 
-if [ -f mysql/schema.sql ]; then
+if [ -f ./schema.sql ]; then
     mysql -u "${DB_USER}" -p"${DB_PASS}" -h 127.0.0.1 "${DB_SQL}" < ./schema.sql
 else
     echo -e "[WARN] mysql/schema.sql not found. Skipping import."
