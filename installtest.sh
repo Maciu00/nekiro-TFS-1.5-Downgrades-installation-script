@@ -723,6 +723,22 @@ VALUES ("${ACCOUNT_NAME}", SHA1("${ACCOUNT_PASS}"), 1, 0, "", UNIX_TIMESTAMP());
 
 SET @account_id = LAST_INSERT_ID();
 
+INSERT INTO players
+(name, group_id, account_id, level, vocation, health, healthmax, experience,
+ lookbody, lookfeet, lookhead, looklegs, looktype, lookaddons, direction, maglevel,
+ mana, manamax, manaspent, soul, town_id, posx, posy, posz, conditions, cap, sex,
+ lastlogin, lastip, save, skull, skulltime, lastlogout, blessings, onlinetime,
+ deletion, balance, stamina,
+ skill_fist, skill_fist_tries, skill_club, skill_club_tries, skill_sword, skill_sword_tries,
+ skill_axe, skill_axe_tries, skill_dist, skill_dist_tries, skill_shielding, skill_shielding_tries,
+ skill_fishing, skill_fishing_tries)
+VALUES
+('111111', 1, 1, 1, 1, 150, 150, 0,
+ 78, 95, 94, 93, 136, 0, 2, 0,
+ 0, 0, 0, 100, 1, 100, 100, 7, '', 400, 0,
+ 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0);
+
 
 MYSQL_SCRIPT
 
