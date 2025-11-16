@@ -87,18 +87,6 @@ if [ -d "TFS-1.5-Downgrades" ]; then
     git pull origin "$BRANCH"
 else
     git clone -b "$BRANCH" "$REPO_URL"
-    cd TFS-1.5-Downgrades || exit
-fi
-# --- CLONE OR UPDATE REPOSITORY ---
-cd /root || exit
-if [ -d "TFS-1.5-Downgrades" ]; then
-    cd TFS-1.5-Downgrades || exit
-    git fetch
-    git reset --hard
-    git checkout "$BRANCH"
-    git pull origin "$BRANCH"
-else
-    git clone -b "$BRANCH" "$REPO_URL"
     cd TFS-1.5-Downgrades|| exit
 fi
 # ------------------------------
