@@ -519,7 +519,7 @@ INSERT INTO players
  skill_axe, skill_axe_tries, skill_dist, skill_dist_tries, skill_shielding, skill_shielding_tries,
  skill_fishing, skill_fishing_tries)
 VALUES
-('Test', 1, 1, 1, 1, 150, 150, 0,
+('${PLAYER_NAME}', 1, 1, 1, 1, 150, 150, 0,
  78, 95, 94, 93, 136, 0, 2, 0,
  0, 0, 0, 100, 1, 100, 100, 7, '', 400, 0,
  0, 0, 0, 0, 0, 0, 0, 0, 0,
