@@ -603,8 +603,7 @@ CYAN='\\033[1;36m'
 RED='\\033[1;31m'
 NC='\\033[0m'
 
-while true; do
-    echo -e ""
+echo -e ""
 echo -e "${GREEN}"
 echo -e "████████╗███████╗███████╗     ██╗██╗"
 echo -e "╚══██╔══╝██╔════╝██╔════╝     ██║██║"
@@ -613,11 +612,13 @@ echo -e "   ██║   ██╔══╝  ╚════██║██   █
 echo -e "   ██║   ███████╗███████║╚█████╔╝██║"
 echo -e "   ╚═╝   ╚══════╝╚══════╝ ╚════╝ ╚═╝"
 echo -e "${NC}"
-
-echo -e "${YELLOW}============================================================${NC}"
-echo -e "         ${GREEN}THE FORGOTTEN SERVER — INSTALL COMPLETE${NC}"
+    echo -e "${YELLOW}============================================================${NC}"
+echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
+echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e ""
+
+while true; do
     echo -e "\${YELLOW}Select an action:\${NC}"
     echo "1) Start server"
     echo "2) Stop server"
@@ -643,11 +644,7 @@ echo -e ""
         5) break ;;
         *) echo -e "\${RED}Invalid option!\${NC}" ;;
     esac
-    echo -e "${YELLOW}============================================================${NC}"
-echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
-echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
-echo -e "${YELLOW}============================================================${NC}"
-echo -e ""
+     echo ""
 done
 EOF
 
