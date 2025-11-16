@@ -596,6 +596,7 @@ systemctl restart apache2
 #   DONE
 # ------------------------------
 echo -e ""
+<<<<<<< HEAD
 echo -e "${GREEN}"
 echo -e "████████╗███████╗███████╗     ██╗██╗"
 echo -e "╚══██╔══╝██╔════╝██╔════╝     ██║██║"
@@ -608,6 +609,11 @@ echo -e "${NC}"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e "         ${GREEN}THE FORGOTTEN SERVER — INSTALL COMPLETE${NC}"
 echo -e "${YELLOW}============================================================${NC}"
+=======
+echo -e "${YELLOW}=============================================="
+echo -e "   INSTALLATION COMPLETED SUCCESSFULLY!"
+echo -e "==============================================${NC}"
+>>>>>>> c37cfa9d3330e0bb9f067e054f43ff3c9978d94d
 echo -e ""
 
 echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO${NC}"
@@ -632,8 +638,14 @@ echo -e "      systemctl restart tfs"
 echo -e "      systemctl status tfs"
 echo -e ""
 
+<<<<<<< HEAD
 echo -e "${YELLOW}============================================================${NC}"
 echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
 echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
 echo -e "${YELLOW}============================================================${NC}"
+=======
+echo -e "${YELLOW}=============================================="
+echo -e "   Made in Poland 🇵🇱  "
+echo -e "==============================================${NC}"
+>>>>>>> c37cfa9d3330e0bb9f067e054f43ff3c9978d94d
 echo -e ""
