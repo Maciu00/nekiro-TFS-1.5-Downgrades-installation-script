@@ -593,6 +593,68 @@ ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
 # ------------------------------
+# CREATE RUN.SH SCRIPT
+# ------------------------------
+cat > /root/run.sh <<EOF
+#!/bin/bash
+GREEN='\\033[1;32m'
+YELLOW='\\033[1;33m'
+CYAN='\\033[1;36m'
+RED='\\033[1;31m'
+NC='\\033[0m'
+
+while true; do
+    echo -e ""
+echo -e "${GREEN}"
+echo -e "████████╗███████╗███████╗     ██╗██╗"
+echo -e "╚══██╔══╝██╔════╝██╔════╝     ██║██║"
+echo -e "   ██║   █████╗  ███████╗     ██║██║"
+echo -e "   ██║   ██╔══╝  ╚════██║██   ██║██║"
+echo -e "   ██║   ███████╗███████║╚█████╔╝██║"
+echo -e "   ╚═╝   ╚══════╝╚══════╝ ╚════╝ ╚═╝"
+echo -e "${NC}"
+
+echo -e "${YELLOW}============================================================${NC}"
+echo -e "         ${GREEN}THE FORGOTTEN SERVER — INSTALL COMPLETE${NC}"
+echo -e "${YELLOW}============================================================${NC}"
+echo -e ""
+    echo -e "\${YELLOW}Select an action:\${NC}"
+    echo "1) Start server"
+    echo "2) Stop server"
+    echo "3) Restart server"
+    echo "4) Show account info"
+    echo "5) Exit"
+    read -rp "Choice [1-5]: " CHOICE
+    case \$CHOICE in
+        1) systemctl start tfs ;;
+        2) systemctl stop tfs ;;
+        3) systemctl restart tfs ;;
+        4) echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO${NC}"
+          printf "  %-18s %s\n" "Login:" "${ACCOUNT_NAME}"
+          printf "  %-18s %s\n" "Password:" "${ACCOUNT_PASS}"
+          echo -e ""
+
+        echo -e "${YELLOW}🗄️  DATABASE CREDENTIALS${NC}"
+        printf "  %-18s %s\n" "DB Name:" "${DB_SQL}"
+        printf "  %-18s %s\n" "DB User:" "${DB_USER}"
+        printf "  %-18s %s\n" "DB Pass:" "${DB_PASS}"
+         echo -e ""
+          ;;
+        5) break ;;
+        *) echo -e "\${RED}Invalid option!\${NC}" ;;
+    esac
+    echo -e "${YELLOW}============================================================${NC}"
+echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
+echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
+echo -e "${YELLOW}============================================================${NC}"
+echo -e ""
+done
+EOF
+
+chmod +x /root/TFS-1.5-Downgrades/run.sh
+echo -e "${GREEN}[INFO] run.sh created. Use it to manage your server.${NC}"
+
+# ------------------------------
 #   DONE
 # ------------------------------
 
