@@ -596,7 +596,7 @@ systemctl restart apache2
 #   DONE
 # ------------------------------
 echo -e ""
-echo -e "${GREEN}=============================================="
+echo -e "${YELLOW}=============================================="
 echo -e "   INSTALLATION COMPLETED SUCCESSFULLY!"
 echo -e "==============================================${NC}"
 echo -e ""
@@ -623,7 +623,7 @@ echo "      systemctl stop tfs"
 echo "      systemctl status tfs"
 echo -e ""
 
-echo -e "${GREEN}=============================================="
+echo -e "${YELLOW}=============================================="
 echo -e "   Made in Poland 🇵🇱  "
 echo -e "==============================================${NC}"
 echo -e ""
