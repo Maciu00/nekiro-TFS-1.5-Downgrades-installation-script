@@ -35,6 +35,29 @@ You can select the version during installation.
 - At least 1GB RAM (installer will create a 4GB swap if needed)
 - Root privileges (`sudo`)
 
+
+## Installation
+
+**1.Clone the repository:**
+
+```bash
+git clone https://github.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script.git && cd forgottenserver-install-linux && chmod +x install.sh && ./install.sh
+
+```
+
+ OR
+
+```
+wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script/main/install.sh && chmod +x install.sh && ./install.sh
+```
+
+
+
+**2.Start the server:**
+
+``` cd TFS-1.5-Downgrades  && ./tfs```
+
+
 ---
 
 ## Author
