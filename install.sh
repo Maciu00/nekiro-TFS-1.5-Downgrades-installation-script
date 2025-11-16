@@ -686,7 +686,7 @@ echo -e ""
 
 echo -e "${YELLOW}🔥 SERVER COMMANDS${NC}"
 echo -e "  Manual run:"
-echo -e "      cd TFS-1.5-Downgrades && ./tfs"
+echo -e "      ./run.sh"
 echo -e ""
 echo -e "  Systemd:"
 echo -e "      systemctl start tfs"
