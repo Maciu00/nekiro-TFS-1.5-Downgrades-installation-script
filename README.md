@@ -37,7 +37,7 @@ You can select the version during installation.
 
 ---
 
-###Author
+## Author
 
 Maciu00 – Original Installer Author
 
