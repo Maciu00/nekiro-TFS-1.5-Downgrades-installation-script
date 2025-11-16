@@ -48,7 +48,7 @@ git clone https://github.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-scri
  OR
 
 ```
-wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script/main/install.sh && chmod +x install.sh && ./install.sh
+wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script/1.0/install.sh && chmod +x install.sh && ./install.sh
 ```
 
 
