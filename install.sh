@@ -596,7 +596,6 @@ systemctl restart apache2
 #   DONE
 # ------------------------------
 echo -e ""
-<<<<<<< HEAD
 echo -e "${GREEN}"
 echo -e "████████╗███████╗███████╗     ██╗██╗"
 echo -e "╚══██╔══╝██╔════╝██╔════╝     ██║██║"
@@ -609,11 +608,9 @@ echo -e "${NC}"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e "         ${GREEN}THE FORGOTTEN SERVER — INSTALL COMPLETE${NC}"
 echo -e "${YELLOW}============================================================${NC}"
-=======
 echo -e "${YELLOW}=============================================="
 echo -e "   INSTALLATION COMPLETED SUCCESSFULLY!"
 echo -e "==============================================${NC}"
->>>>>>> c37cfa9d3330e0bb9f067e054f43ff3c9978d94d
 echo -e ""
 
 echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO${NC}"
