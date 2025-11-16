@@ -182,30 +182,7 @@ rateMagic = 3
 rateSpawn = 1
 EOF
 
-# ------------------------------
-#   BUILD TFS
-# ------------------------------
 
-echo -e "[INFO] Building The Forgotten Server..."
-
-mkdir -p build
-cd build || exit
-
-cmake .. \
-    -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
-    -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
-    -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
-    -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
-make -j$(nproc)
-
-
-echo -e "[INFO] Moving tfs binary..."
-mv tfs ../
-chmod +x ../tfs
-
-# ------------------------------
-#   CREATE ACCOUNT AND PLAYER
-# ------------------------------
 
 ACCOUNT_NAME="111111"
 ACCOUNT_PASS=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c16)
@@ -239,39 +216,6 @@ VALUES
  10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0);
 MYSQL_SCRIPT
 
-# ------------------------------
-#   SYSTEMD SERVICE
-# ------------------------------
-
-echo -e "[INFO] Creating systemd service..."
-
-cat > /etc/systemd/system/tfs.service <<EOF
-[Unit]
-Description=The Forgotten Server
-After=network.target mysql.service
-Requires=mysql.service
-
-[Service]
-Type=simple
-WorkingDirectory=/root/TFS-1.5-Downgrades
-ExecStart=/root/TFS-1.5-Downgrades/tfs
-Restart=on-failure
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable tfs.service
-
-# ------------------------------
-#   PHPMYADMIN SETUP
-# ------------------------------
-
-ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
-systemctl restart apache2
-
         ;;
     2)
         BRANCH="8.0"
@@ -290,18 +234,7 @@ else
     git clone -b "$BRANCH" "$REPO_URL"
     cd TFS-1.5-Downgrades || exit
 fi
-# --- CLONE OR UPDATE REPOSITORY ---
-cd /root || exit
-if [ -d "TFS-1.5-Downgrades" ]; then
-    cd TFS-1.5-Downgrades || exit
-    git fetch
-    git reset --hard
-    git checkout "$BRANCH"
-    git pull origin "$BRANCH"
-else
-    git clone -b "$BRANCH" "$REPO_URL"
-    cd TFS-1.5-Downgrades|| exit
-fi
+
 # ------------------------------
 #   RANDOM DB ACCESS
 # ------------------------------
@@ -395,26 +328,6 @@ rateMagic = 3
 rateSpawn = 1
 EOF
 
-# ------------------------------
-#   BUILD TFS
-# ------------------------------
-
-echo -e "[INFO] Building The Forgotten Server..."
-
-mkdir -p build
-cd build || exit
-
-cmake .. \
-    -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
-    -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
-    -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
-    -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
-make -j$(nproc)
-
-
-echo -e "[INFO] Moving tfs binary..."
-mv tfs ../
-chmod +x ../tfs
 
 # ------------------------------
 #   CREATE ACCOUNT AND PLAYER
@@ -452,38 +365,6 @@ VALUES
  10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0);
 MYSQL_SCRIPT
 
-# ------------------------------
-#   SYSTEMD SERVICE
-# ------------------------------
-
-echo -e "[INFO] Creating systemd service..."
-
-cat > /etc/systemd/system/tfs.service <<EOF
-[Unit]
-Description=The Forgotten Server
-After=network.target mysql.service
-Requires=mysql.service
-
-[Service]
-Type=simple
-WorkingDirectory=/root/TFS-1.5-Downgrades
-ExecStart=/root/TFS-1.5-Downgrades/tfs
-Restart=on-failure
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-systemctl daemon-reload
-systemctl enable tfs.service
-
-# ------------------------------
-#   PHPMYADMIN SETUP
-# ------------------------------
-
-ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
-systemctl restart apache2
 
 
         ;;
@@ -609,26 +490,6 @@ rateMagic = 3
 rateSpawn = 1
 EOF
 
-# ------------------------------
-#   BUILD TFS
-# ------------------------------
-
-echo -e "[INFO] Building The Forgotten Server..."
-
-mkdir -p build
-cd build || exit
-
-cmake .. \
-    -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
-    -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
-    -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
-    -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
-make -j$(nproc)
-
-
-echo -e "[INFO] Moving tfs binary..."
-mv tfs ../
-chmod +x ../tfs
 
 # ------------------------------
 #   CREATE ACCOUNT AND PLAYER
@@ -667,6 +528,37 @@ VALUES
 
 MYSQL_SCRIPT
 
+
+
+        ;;
+    *)
+        echo ""
+
+        exit 1
+        ;;
+        esac 
+# ------------------------------
+#   BUILD TFS
+# ------------------------------
+
+echo -e "[INFO] Building The Forgotten Server..."
+
+mkdir -p build
+cd build || exit
+
+cmake .. \
+    -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
+    -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
+    -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
+    -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
+make -j$(nproc)
+
+
+echo -e "[INFO] Moving tfs binary..."
+mv tfs ../
+chmod +x ../tfs
+
+
 # ------------------------------
 #   SYSTEMD SERVICE
 # ------------------------------
@@ -700,15 +592,7 @@ systemctl enable tfs.service
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
-        ;;
-    *)
-        echo ""
-
-        exit 1
-        ;;
-        esac 
-
-        # ------------------------------
+# ------------------------------
 #   DONE
 # ------------------------------
 echo -e ""
