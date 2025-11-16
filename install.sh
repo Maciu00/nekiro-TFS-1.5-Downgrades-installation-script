@@ -216,12 +216,12 @@ mkdir -p build
 cd build || exit
 
 cmake .. \
-  -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
-  -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
-  -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
-  -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
-
+    -DCMAKE_C_COMPILER=/usr/bin/gcc-11 \
+    -DCMAKE_CXX_COMPILER=/usr/bin/g++-11 \
+    -DCrypto++_INCLUDE_DIR=/usr/include/crypto++ \
+    -DCrypto++_LIBRARIES=/usr/lib/x86_64-linux-gnu/libcryptopp.so
 make -j$(nproc)
+
 
 echo -e "[INFO] Moving tfs binary..."
 mv tfs ../
