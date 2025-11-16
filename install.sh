@@ -651,7 +651,7 @@ echo -e ""
 done
 EOF
 
-chmod +x /root/TFS-1.5-Downgrades/run.sh
+chmod +x /root/run.sh
 echo -e "${GREEN}[INFO] run.sh created. Use it to manage your server.${NC}"
 
 # ------------------------------
