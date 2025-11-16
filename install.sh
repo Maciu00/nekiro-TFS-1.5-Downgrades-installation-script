@@ -272,44 +272,6 @@ systemctl enable tfs.service
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
-
-
-# ------------------------------
-#   DONE
-# ------------------------------
-echo -e ""
-echo -e "${GREEN}=============================================="
-echo -e "   INSTALLATION COMPLETED SUCCESSFULLY!"
-echo -e "==============================================${NC}"
-echo -e ""
-
-echo -e "${YELLOW}=== Game Account Info ========================${NC}"
-echo "  Account created:"
-echo "      Login:    ${ACCOUNT_NAME}"
-echo "      Password: ${ACCOUNT_PASS}"
-echo -e ""
-
-echo -e "${YELLOW}=== Database Credentials =====================${NC}"
-echo "  Database name: ${DB_SQL}"
-echo "  Username:      ${DB_USER}"
-echo "  Password:      ${DB_PASS}"
-echo -e ""
-
-echo -e "${YELLOW}=== TFS Server Commands ======================${NC}"
-echo "  Manual start:"
-echo "      cd TFS-1.5-Downgrades  && ./tfs"
-echo ""
-echo "  Systemd:"
-echo "      systemctl start tfs"
-echo "      systemctl stop tfs"
-echo "      systemctl status tfs"
-echo -e ""
-
-echo -e "${GREEN}=============================================="
-echo -e "   Made in Poland 🇵🇱  "
-echo -e "==============================================${NC}"
-echo -e ""
-
         ;;
     2)
         BRANCH="8.0"
@@ -523,43 +485,6 @@ systemctl enable tfs.service
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
-
-
-# ------------------------------
-#   DONE
-# ------------------------------
-echo -e ""
-echo -e "${GREEN}=============================================="
-echo -e "   INSTALLATION COMPLETED SUCCESSFULLY!"
-echo -e "==============================================${NC}"
-echo -e ""
-
-echo -e "${YELLOW}=== Game Account Info ========================${NC}"
-echo "  Account created:"
-echo "      Login:    ${ACCOUNT_NAME}"
-echo "      Password: ${ACCOUNT_PASS}"
-echo -e ""
-
-echo -e "${YELLOW}=== Database Credentials =====================${NC}"
-echo "  Database name: ${DB_SQL}"
-echo "  Username:      ${DB_USER}"
-echo "  Password:      ${DB_PASS}"
-echo -e ""
-
-echo -e "${YELLOW}=== TFS Server Commands ======================${NC}"
-echo "  Manual start:"
-echo "      cd TFS-1.5-Downgrades  && ./tfs"
-echo ""
-echo "  Systemd:"
-echo "      systemctl start tfs"
-echo "      systemctl stop tfs"
-echo "      systemctl status tfs"
-echo -e ""
-
-echo -e "${GREEN}=============================================="
-echo -e "   Made in Poland 🇵🇱  "
-echo -e "==============================================${NC}"
-echo -e ""
 
         ;;
     3)
@@ -775,9 +700,15 @@ systemctl enable tfs.service
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
+        ;;
+    *)
+        echo ""
 
+        exit 1
+        ;;
+        esac 
 
-# ------------------------------
+        # ------------------------------
 #   DONE
 # ------------------------------
 echo -e ""
@@ -812,10 +743,3 @@ echo -e "${GREEN}=============================================="
 echo -e "   Made in Poland 🇵🇱  "
 echo -e "==============================================${NC}"
 echo -e ""
-
-        ;;
-    *)
-        echo ""
-        exit 1
-        ;;
-        esac 
