@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================
-#
+#  The Forgotten Server - Full Auto Installer + systemd
 #  Author: Maciu00 
 # ==========================================
 
@@ -47,6 +47,7 @@ libcrypto++-dev libcrypto++-doc libcrypto++-utils
 
 apt autoremove -y
 
+sudo apt install screen -y
 
 # ------------------------------
 #   DOWNLOAD INSTALLER
@@ -508,7 +509,7 @@ INSERT INTO players
  skill_axe, skill_axe_tries, skill_dist, skill_dist_tries, skill_shielding, skill_shielding_tries,
  skill_fishing, skill_fishing_tries)
 VALUES
-('${PLAYER_NAME}', 1, 1, 1, 1, 150, 150, 0,
+('Test', 1, 1, 1, 1, 150, 150, 0,
  78, 95, 94, 93, 136, 0, 2, 0,
  0, 0, 0, 100, 1, 100, 100, 7, '', 400, 0,
  0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -554,18 +555,24 @@ chmod +x ../tfs
 
 echo -e "[INFO] Creating systemd service..."
 
-cat > /etc/systemd/system/tfs.service <<EOF
 [Unit]
-Description=The Forgotten Server
+Description=The Forgotten Server (screen)
 After=network.target mysql.service
 Requires=mysql.service
 
 [Service]
-Type=simple
-WorkingDirectory=/root/TFS-1.5-Downgrades
-ExecStart=/root/TFS-1.5-Downgrades/tfs
-Restart=on-failure
+Type=forking
 User=root
+WorkingDirectory=/var/TFS-1.5-Downgrades
+
+# Start TFS w screenie
+ExecStart=/usr/bin/screen -dmS tfs /var/TFS-1.5-Downgrades/tfs
+
+# Stop TFS
+ExecStop=/usr/bin/screen -S tfs -X quit
+
+# Restart jeśli padnie
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
@@ -573,72 +580,13 @@ EOF
 
 systemctl daemon-reload
 systemctl enable tfs.service
-
+systemctl start tfs
 # ------------------------------
 #   PHPMYADMIN SETUP
 # ------------------------------
 
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
-
-# ------------------------------
-# CREATE RUN.SH SCRIPT
-# ------------------------------
-cat > /root/run.sh <<EOF
-#!/bin/bash
-GREEN='\\033[1;32m'
-YELLOW='\\033[1;33m'
-CYAN='\\033[1;36m'
-RED='\\033[1;31m'
-NC='\\033[0m'
-
-echo -e ""
-echo -e "${GREEN}"
-echo -e "████████╗███████╗███████╗     ██╗██╗"
-echo -e "╚══██╔══╝██╔════╝██╔════╝     ██║██║"
-echo -e "   ██║   █████╗  ███████╗     ██║██║"
-echo -e "   ██║   ██╔══╝  ╚════██║██   ██║██║"
-echo -e "   ██║   ███████╗███████║╚█████╔╝██║"
-echo -e "   ╚═╝   ╚══════╝╚══════╝ ╚════╝ ╚═╝"
-echo -e "${NC}"
-    echo -e "${YELLOW}============================================================${NC}"
-echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
-echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
-echo -e "${YELLOW}============================================================${NC}"
-echo -e ""
-
-while true; do
-    echo -e "\${YELLOW}Select an action:\${NC}"
-    echo "1) Start server"
-    echo "2) Stop server"
-    echo "3) Restart server"
-    echo "4) Show account info"
-    echo "5) Exit"
-    read -rp "Choice [1-5]: " CHOICE
-    case \$CHOICE in
-        1) systemctl start tfs ;;
-        2) systemctl stop tfs ;;
-        3) systemctl restart tfs ;;
-        4) echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO${NC}"
-          printf "  %-18s %s\n" "Login:" "${ACCOUNT_NAME}"
-          printf "  %-18s %s\n" "Password:" "${ACCOUNT_PASS}"
-          echo -e ""
-
-        echo -e "${YELLOW}🗄️  DATABASE CREDENTIALS${NC}"
-        printf "  %-18s %s\n" "DB Name:" "${DB_SQL}"
-        printf "  %-18s %s\n" "DB User:" "${DB_USER}"
-        printf "  %-18s %s\n" "DB Pass:" "${DB_PASS}"
-         echo -e ""
-          ;;
-        5) break ;;
-        *) echo -e "\${RED}Invalid option!\${NC}" ;;
-    esac
-     echo ""
-done
-EOF
-
-chmod +x /root/run.sh
-echo -e "${GREEN}[INFO] run.sh created. Use it to manage your server.${NC}"
 
 # ------------------------------
 #   DONE
@@ -672,7 +620,13 @@ echo -e ""
 
 echo -e "${YELLOW}🔥 SERVER COMMANDS${NC}"
 echo -e "  Manual run:"
-echo -e "      ./run.sh"
+echo -e "      cd TFS-1.5-Downgrades && ./tfs"
+echo -e ""
+echo -e "  Systemd:"
+echo -e "      systemctl start tfs"
+echo -e "      systemctl stop tfs"
+echo -e "      systemctl restart tfs"
+echo -e "      systemctl status tfs"
 echo -e ""
 
 echo -e "${YELLOW}============================================================${NC}"
