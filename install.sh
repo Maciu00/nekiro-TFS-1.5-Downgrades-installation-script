@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================
-#  The Forgotten Server - Full Auto Installer + systemd
+#
 #  Author: Maciu00 
 # ==========================================
 
