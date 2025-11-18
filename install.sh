@@ -588,6 +588,91 @@ systemctl start tfs
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
+
+
+# --- Create TFS Control Panel Script ---
+CONTROL_SCRIPT="/root/tfs_control.sh"
+
+cat > "$CONTROL_SCRIPT" <<'EOF'
+#!/bin/bash
+
+SERVICE="tfs"
+SCREEN_NAME="tfs"
+USER_LIST_FILE="/var/TFS-1.5-Downgrades/created_users.txt"
+BACKUP_DIR="/var/TFS-1.5-Downgrades/backups"
+
+mkdir -p "$BACKUP_DIR"
+
+while true; do
+    clear
+    echo "========================================="
+    echo "   THE FORGOTTEN SERVER — CONTROL PANEL"
+    echo "========================================="
+    echo ""
+    echo " [1] Start Server"
+    echo " [2] Stop Server"
+    echo " [3] Restart Server"
+    echo " [4] View Logs"
+    echo " [5] Open Screen Console"
+    echo " [7] Show Created Users"
+    echo " [9] Exit"
+    echo ""
+    read -p "Choose an option (1-9): " choice
+
+    case $choice in
+        1)
+            echo "Starting server..."
+            systemctl start "$SERVICE"
+            sleep 1
+            ;;
+        2)
+            echo "Stopping server..."
+            systemctl stop "$SERVICE"
+            sleep 1
+            ;;
+        3)
+            echo "Restarting server..."
+            systemctl restart "$SERVICE"
+            sleep 1
+            ;;
+        4)
+            echo "Showing live logs (press CTRL+C to exit)..."
+            sleep 1
+            journalctl -u "$SERVICE" -f
+            ;;
+        5)
+            echo "Opening screen console..."
+            echo "Press CTRL+A then D to detach without stopping the server."
+            sleep 1
+            screen -r "$SCREEN_NAME"
+            ;;
+        7)
+            echo -e "GAME ACCOUNT INFO"
+            echo -e "Login:" "${ACCOUNT_NAME}"
+            echo -e "Password:" "${ACCOUNT_PASS}"
+            echo -e ""
+            echo -e "  Use this login and password to log in to your OT server."
+            echo -e ""
+            ;;    
+        9)
+            echo "Exiting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid option. Try again.";
+            sleep 1
+            ;;
+    esac
+done
+EOF
+
+# Make the script executable
+chmod +x "$CONTROL_SCRIPT"
+
+echo "[INFO] TFS Control Panel script created at $CONTROL_SCRIPT"
+
+
+
 # ------------------------------
 #   DONE
 # ------------------------------
@@ -607,26 +692,60 @@ echo -e "         ${GREEN}THE FORGOTTEN SERVER — INSTALL COMPLETE${NC}"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e ""
 
-echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO${NC}"
+echo -e "${YELLOW}⚔️  GAME ACCOUNT INFO (Your first account)${NC}"
 printf "  %-18s %s\n" "Login:" "${ACCOUNT_NAME}"
 printf "  %-18s %s\n" "Password:" "${ACCOUNT_PASS}"
 echo -e ""
+echo -e "  Use this login and password to log in to your OT server."
+echo -e ""
 
-echo -e "${YELLOW}🗄️  DATABASE CREDENTIALS${NC}"
+echo -e "${YELLOW}🗄️  DATABASE CREDENTIALS (For website / phpMyAdmin)${NC}"
 printf "  %-18s %s\n" "DB Name:" "${DB_SQL}"
 printf "  %-18s %s\n" "DB User:" "${DB_USER}"
 printf "  %-18s %s\n" "DB Pass:" "${DB_PASS}"
 echo -e ""
-
-echo -e "${YELLOW}🔥 SERVER COMMANDS${NC}"
-echo -e "  Manual run:"
-echo -e "      cd TFS-1.5-Downgrades && ./tfs"
+echo -e "  These details are used only by the server and websites like Gesior."
 echo -e ""
-echo -e "  Systemd:"
-echo -e "      systemctl start tfs"
-echo -e "      systemctl stop tfs"
-echo -e "      systemctl restart tfs"
-echo -e "      systemctl status tfs"
+
+echo -e "${YELLOW}🔥 HOW TO CONTROL YOUR SERVER${NC}"
+echo -e ""
+echo -e "  ▶️ Start server manually (not needed, server starts automatically):"
+echo -e "      ${GREEN}cd /var/TFS-1.5-Downgrades && ./tfs${NC}"
+echo -e ""
+echo -e "  ▶️ Start/stop server through systemd (recommended):"
+echo -e "      ${GREEN}systemctl start tfs${NC}   - start server"
+echo -e "      ${GREEN}systemctl stop tfs${NC}    - stop server"
+echo -e "      ${GREEN}systemctl restart tfs${NC} - restart server"
+echo -e "      ${GREEN}systemctl status tfs${NC}  - check if server is running"
+echo -e ""
+
+echo -e "${YELLOW}🚀 SERVER STATUS (Important)${NC}"
+echo -e "  Your server has been ${GREEN}started automatically${NC}."
+echo -e "  This means the OT is already running and players can connect."
+echo -e ""
+
+echo -e "${YELLOW}📟 HOW TO SEE THE SERVER CONSOLE (Screen)${NC}"
+echo -e "  The server runs inside a \"screen\" window."
+echo -e "  To open the server console and see live messages:"
+echo -e ""
+echo -e "      ${GREEN}screen -r tfs${NC}"
+echo -e ""
+echo -e "  To EXIT the console but KEEP SERVER RUNNING:"
+echo -e "      Press: ${GREEN}Ctrl + A${NC}, then ${GREEN}D${NC}"
+echo -e ""
+echo -e "  (This is very important: DO NOT close the console with Ctrl+C!)"
+echo -e ""
+
+echo -e "${YELLOW}📜 HOW TO SEE SERVER LOGS (Errors, warnings, info)${NC}"
+echo -e ""
+echo -e "  ▶️ Live logs (updates in real time):"
+echo -e "      ${GREEN}journalctl -u tfs -f${NC}"
+echo -e ""
+echo -e "  ▶️ Complete log history:"
+echo -e "      ${GREEN}journalctl -u tfs${NC}"
+echo -e ""
+echo -e "  ▶️ Live game console (best for debugging):"
+echo -e "      ${GREEN}screen -r tfs${NC}"
 echo -e ""
 
 echo -e "${YELLOW}============================================================${NC}"
@@ -634,3 +753,5 @@ echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
 echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e ""
+
+
