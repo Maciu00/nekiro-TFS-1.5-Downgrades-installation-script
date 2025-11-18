@@ -31,7 +31,7 @@ You can select the version during installation.
 
 ## Requirements
 
-- Ubuntu 20.04 or 22.04
+- Ubuntu 20.04, 22.04, 24.04.
 - At least 1GB RAM (installer will create a 4GB swap if needed)
 - Root privileges (`sudo`)
 
@@ -55,7 +55,7 @@ wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Down
 
 **2.Start the server:**
 
-``` cd TFS-1.5-Downgrades  && ./tfs```
+``` cd /var/TFS-1.5-Downgrades  && ./tfs```
 
 
 ---
