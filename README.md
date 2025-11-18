@@ -55,7 +55,7 @@ wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Down
 
 **2.Start the server:**
 
-``` cd TFS-1.5-Downgrades  && ./tfs```
+``` cd /var/TFS-1.5-Downgrades  && ./tfs```
 
 
 ---
