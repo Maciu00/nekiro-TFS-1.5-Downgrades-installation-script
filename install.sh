@@ -556,7 +556,7 @@ chmod +x ../tfs
 echo -e "[INFO] Creating systemd service..."
 
 [Unit]
-Description=The Forgotten Server (screen)
+Description=The Forgotten Server
 After=network.target mysql.service
 Requires=mysql.service
 
