@@ -37,21 +37,50 @@ fi
 
 echo -e "[INFO] Updating system..."
 apt update && apt upgrade -y
+#!/bin/bash
 
-echo -e "[INFO] Installing required packages..."
-DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake git \
-liblua5.4-dev libboost-all-dev libmysqlclient-dev libssl-dev \
-libpugixml-dev libfmt-dev gcc-11 g++-11 apache2 php php-mysql \
-mariadb-server mariadb-client phpmyadmin unzip \
-libcrypto++-dev libcrypto++-doc libcrypto++-utils
+VERSION=$(lsb_release -rs)
+CODENAME=$(lsb_release -cs)
 
-apt autoremove -y
+echo "[INFO] Wykryto Ubuntu: $VERSION ($CODENAME)"
 
-sudo apt install screen -y
+# Wspólne pakiety
+COMMON_PKGS="build-essential cmake git \
+libboost-all-dev libssl-dev libpugixml-dev libfmt-dev \
+apache2 php php-mysql mariadb-server mariadb-client phpmyadmin unzip screen"
 
-# ------------------------------
-#   DOWNLOAD INSTALLER
-# ------------------------------
+# Zależne pakiety
+if [[ "$VERSION" == "20.04" ]]; then
+    echo "[INFO] Instalacja pakietów dla Ubuntu 20.04"
+    sudo apt update
+    sudo apt install -y $COMMON_PKGS \
+      liblua5.3-dev libmysqlclient-dev \
+      gcc-9 g++-9 libcrypto++-dev libcrypto++-doc libcrypto++-utils
+
+elif [[ "$VERSION" == "22.04" ]]; then
+    echo "[INFO] Instalacja pakietów dla Ubuntu 22.04"
+    sudo apt update
+    sudo apt install -y $COMMON_PKGS \
+      liblua5.4-dev libmysqlclient-dev \
+      gcc-11 g++-11 libcrypto++-dev libcrypto++-doc libcrypto++-utils
+
+elif [[ "$VERSION" == "24.04" ]]; then
+    echo "[INFO] Instalacja pakietów dla Ubuntu 24.04"
+    sudo apt update
+    sudo apt install -y $COMMON_PKGS \
+      liblua5.4-dev libmysqlclient-dev \
+      # W Ubuntu 24.04 jest gcc‑14 w repozytorium:  
+      gcc-14 g++-14 libcrypto++-dev libcrypto++-doc libcrypto++-utils
+
+else
+    echo "[WARN] Nieobsługiwana wersja Ubuntu: $VERSION — instaluję tylko pakiety wspólne"
+    sudo apt update
+    sudo apt install -y $COMMON_PKGS
+fi
+
+# Czyścimy
+ apt autoremove -y
+
 
 echo -e "[INFO] Cloning or updating Forgotten Server installer repository..."
 
