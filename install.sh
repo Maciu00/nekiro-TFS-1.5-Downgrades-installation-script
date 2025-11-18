@@ -588,18 +588,11 @@ systemctl start tfs
 ln -sf /usr/share/phpmyadmin /var/www/html/phpmyadmin
 systemctl restart apache2
 
+cd /root
 
-
-# --- Create TFS Control Panel Script ---
-CONTROL_SCRIPT="/root/tfs_control.sh"
-
-cat > "$CONTROL_SCRIPT" <<'EOF'
+cat > "start.sh" <<'EOF'
 #!/bin/bash
 
-SERVICE="tfs"
-SCREEN_NAME="tfs"
-USER_LIST_FILE="/var/TFS-1.5-Downgrades/created_users.txt"
-BACKUP_DIR="/var/TFS-1.5-Downgrades/backups"
 
 mkdir -p "$BACKUP_DIR"
 
@@ -664,6 +657,8 @@ while true; do
             ;;
     esac
 done
+USER_LIST_FILE="/var/TFS-1.5-Downgrades/created_users.txt"
+BACKUP_DIR="/var/TFS-1.5-Downgrades/backups"
 EOF
 
 # Make the script executable
