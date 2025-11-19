@@ -676,5 +676,6 @@ echo -e "        ${GREEN}SERVER READY — MAY YOUR LOOT BE LEGENDARY ⚡${NC}"
 echo -e "        Made in Poland 🇵🇱  |  Powered by Linux 🐧"
 echo -e "${YELLOW}============================================================${NC}"
 echo -e ""
+echo -e ""
 
 

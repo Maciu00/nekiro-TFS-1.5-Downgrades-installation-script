@@ -31,7 +31,7 @@ You can select the version during installation.
 
 ## Requirements
 
-- Ubuntu 20.04, 22.04, 24.04.
+- Ubuntu **24.04.**
 - At least 1GB RAM (installer will create a 4GB swap if needed)
 - Root privileges (`sudo`)
 
