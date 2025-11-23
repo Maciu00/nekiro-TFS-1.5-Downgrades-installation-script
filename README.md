@@ -40,12 +40,6 @@ You can select the version during installation.
 
 **Clone the repository:**
 
-```bash
-git clone https://github.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script.git && cd forgottenserver-install-linux && chmod +x install.sh && ./install.sh
-
-```
-
- OR
 
 ```
 wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script/test-build/install.sh && chmod +x install.sh && ./install.sh
