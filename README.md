@@ -31,8 +31,8 @@ You can select the version during installation.
 
 ## Requirements
 
-- Ubuntu **24.04.**
-- At least 1GB RAM (installer will create a 4GB swap if needed)
+- Ubuntu **24.04., 20.04** 
+- At least 1GB RAM (installer will create a 2GB swap if needed)
 - Root privileges (`sudo`)
 
 
@@ -40,12 +40,6 @@ You can select the version during installation.
 
 **Clone the repository:**
 
-```bash
-git clone https://github.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script.git && cd forgottenserver-install-linux && chmod +x install.sh && ./install.sh
-
-```
-
- OR
 
 ```
 wget -O install.sh https://raw.githubusercontent.com/Maciu00/nekiro-TFS-1.5-Downgrades-installation-script/test-build/install.sh && chmod +x install.sh && ./install.sh
