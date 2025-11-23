@@ -71,74 +71,57 @@ swapon --show
 echo -e "[INFO] Updating system..."
 apt update && apt upgrade -y
 
-#!/bin/bash
-
-set -e
-
 UBUNTU_VERSION=$(lsb_release -rs)
 
-echo "[INFO] Detected Ubuntu version: $UBUNTU_VERSION"
+echo "[INFO] Detected Ubuntu: $UBUNTU_VERSION"
 
-DEBIAN_FRONTEND=noninteractive apt update -y
+# --------------------------
+# Wykrywanie wersji Ubuntu
+# --------------------------
 
-COMMON_PACKAGES=(
-build-essential
-cmake
-git
-libboost-all-dev
-libmysqlclient-dev
-libssl-dev
-libpugixml-dev
-libfmt-dev
-apache2
-php
-php-mysql
-mariadb-server
-mariadb-client
-phpmyadmin
-unzip
-screen
-libcrypto++-dev
-libcrypto++-doc
-libcrypto++-utils
-)
-
-# Domyślnie Lua 5.4 (dla 22.04 i 24.04)
-LUA_PACKAGE="liblua5.4-dev"
-GCC_PACKAGES=""
-
-# Dopasowanie pod wersje
-case "$UBUNTU_VERSION" in
-  "20.04")
+if [[ "$UBUNTU_VERSION" == "20.04" ]]; then
     echo "[INFO] Using packages for Ubuntu 20.04"
+
+    apt install -y software-properties-common
+    add-apt-repository ppa:ubuntu-toolchain-r/test -y
+    apt update -y
+
     LUA_PACKAGE="liblua5.3-dev"
     GCC_PACKAGES="gcc-11 g++-11"
-    ;;
-  
-  "22.04")
+
+elif [[ "$UBUNTU_VERSION" == "22.04" ]]; then
     echo "[INFO] Using packages for Ubuntu 22.04"
+
     LUA_PACKAGE="liblua5.4-dev"
     GCC_PACKAGES="gcc-11 g++-11"
-    ;;
-  
-  "24.04")
+
+elif [[ "$UBUNTU_VERSION" == "24.04" ]]; then
     echo "[INFO] Using packages for Ubuntu 24.04"
+
     LUA_PACKAGE="liblua5.4-dev"
     GCC_PACKAGES="gcc g++"
-    ;;
-  
-  *)
-    echo "[ERROR] Unsupported Ubuntu version: $UBUNTU_VERSION"
-    exit 1
-    ;;
-esac
 
-echo "[INFO] Installing packages..."
+else
+    echo "❌ Unsupported Ubuntu version: $UBUNTU_VERSION"
+    exit 1
+fi
+
+# Jeśli gcc-11 nie istnieje – fallback
+if ! apt-cache show gcc-11 >/dev/null 2>&1; then
+    echo "[WARN] gcc-11 unavailable, falling back to system gcc"
+    GCC_PACKAGES="gcc g++"
+fi
+
+echo "[INFO] Installing all packages..."
 
 DEBIAN_FRONTEND=noninteractive apt install -y \
-"${COMMON_PACKAGES[@]}" \
-$LUA_PACKAGE \
-$GCC_PACKAGES
+build-essential cmake git \
+$LUA_PACKAGE libboost-all-dev libmysqlclient-dev libssl-dev \
+libpugixml-dev libfmt-dev $GCC_PACKAGES \
+apache2 php php-mysql mariadb-server mariadb-client \
+phpmyadmin unzip screen \
+libcrypto++-dev libcrypto++-doc libcrypto++-utils
+
 
 apt autoremove -y
 
