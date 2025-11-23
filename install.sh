@@ -71,24 +71,84 @@ swapon --show
 echo -e "[INFO] Updating system..."
 apt update && apt upgrade -y
 
+#!/bin/bash
 
-VERSION=$(lsb_release -rs)
-CODENAME=$(lsb_release -cs)
+set -e
 
-echo "[INFO] Ubuntu: $VERSION ($CODENAME)"
+UBUNTU_VERSION=$(lsb_release -rs)
 
-DEBIAN_FRONTEND=noninteractive apt install -y build-essential cmake git \
-liblua5.4-dev libboost-all-dev libmysqlclient-dev libssl-dev \
-libpugixml-dev libfmt-dev gcc-11 g++-11 apache2 php php-mysql \
-mariadb-server mariadb-client phpmyadmin unzip \
-libcrypto++-dev libcrypto++-doc libcrypto++-utils
+echo "[INFO] Detected Ubuntu version: $UBUNTU_VERSION"
 
- apt autoremove -y
+DEBIAN_FRONTEND=noninteractive apt update -y
+
+COMMON_PACKAGES=(
+build-essential
+cmake
+git
+libboost-all-dev
+libmysqlclient-dev
+libssl-dev
+libpugixml-dev
+libfmt-dev
+apache2
+php
+php-mysql
+mariadb-server
+mariadb-client
+phpmyadmin
+unzip
+screen
+libcrypto++-dev
+libcrypto++-doc
+libcrypto++-utils
+)
+
+# Domyślnie Lua 5.4 (dla 22.04 i 24.04)
+LUA_PACKAGE="liblua5.4-dev"
+GCC_PACKAGES=""
+
+# Dopasowanie pod wersje
+case "$UBUNTU_VERSION" in
+  "20.04")
+    echo "[INFO] Using packages for Ubuntu 20.04"
+    LUA_PACKAGE="liblua5.3-dev"
+    GCC_PACKAGES="gcc-11 g++-11"
+    ;;
+  
+  "22.04")
+    echo "[INFO] Using packages for Ubuntu 22.04"
+    LUA_PACKAGE="liblua5.4-dev"
+    GCC_PACKAGES="gcc-11 g++-11"
+    ;;
+  
+  "24.04")
+    echo "[INFO] Using packages for Ubuntu 24.04"
+    LUA_PACKAGE="liblua5.4-dev"
+    GCC_PACKAGES="gcc g++"
+    ;;
+  
+  *)
+    echo "[ERROR] Unsupported Ubuntu version: $UBUNTU_VERSION"
+    exit 1
+    ;;
+esac
+
+echo "[INFO] Installing packages..."
+
+DEBIAN_FRONTEND=noninteractive apt install -y \
+"${COMMON_PACKAGES[@]}" \
+$LUA_PACKAGE \
+$GCC_PACKAGES
+
+apt autoremove -y
+
+echo -e "[INFO] Installation completed!"
+
 
 
 echo -e "[INFO] Cloning or updating Forgotten Server installer repository..."
 
-#!/bin/bash
+
 
 # --- COLOR CODES ---
 GREEN='\033[1;32m'
