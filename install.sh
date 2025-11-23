@@ -24,25 +24,22 @@ echo -e "[INFO] Server public IP set to: $PUBLIC_IP"
 
 echo "[INFO] Checking existing swap..."
 
-# Wyłącz istniejący swap
 if swapon --show | grep -q "/"; then
   echo "[INFO] Disabling current swap..."
   swapoff -a
 fi
 
-# Usuń stary swapfile jeśli jest
 if [ -f /swapfile ]; then
   echo "[INFO] Removing existing /swapfile..."
   rm -f /swapfile
 fi
 
-# Usuń stare wpisy swap z fstab
+
 sed -i '/swap/d' /etc/fstab
 
-# Sprawdź wolne miejsce
+
 DISK_FREE=$(df -m / | awk 'NR==2 {print $4}')
 
-# Bezpieczna ilość: 2GB swap + margines
 REQUIRED=2500
 
 if [ "$DISK_FREE" -lt "$REQUIRED" ]; then
@@ -63,9 +60,8 @@ echo '/swapfile none swap sw 0 0' >> /etc/fstab
 
 echo "[INFO] Swap 2GB successfully created."
 
-# Wyświetl status
-swapon --show
 
+swapon --show
 
 
 # ------------------------------
