@@ -32,7 +32,7 @@ You can select the version during installation.
 ## Requirements
 
 - Ubuntu **24.04., 20.04** 
-- At least 1GB RAM (installer will create a 4GB swap if needed)
+- At least 1GB RAM (installer will create a 2GB swap if needed)
 - Root privileges (`sudo`)
 
 
